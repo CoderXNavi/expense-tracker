@@ -59,32 +59,32 @@ else:
 st.markdown(f"""
 <style>
     /* Hide the form enter helper overlay to avoid text overlap */
-    [data-testid="InputInstructions"] {
+    [data-testid="InputInstructions"] {{
         display: none !important;
-    }
+    }}
 
     /* Dark sidebar toggle button (visible when closed) */
-    [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] {
+    [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] {{
         background-color: #0f172a !important;
         border-radius: 8px !important;
         box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
         top: 14px !important;
         left: 14px !important;
-    }
-    [data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg {
+    }}
+    [data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg {{
         fill: #ffffff !important;
         color: #ffffff !important;
         stroke: #ffffff !important;
-    }
-    [data-testid="stSidebarCollapseButton"] button {
+    }}
+    [data-testid="stSidebarCollapseButton"] button {{
         color: #0f172a !important;
-    }
+    }}
 
     /* Sharp text rendering in table (fixes canvas blur on high-DPI screens) */
-    [data-testid="stDataFrame"] canvas {
+    [data-testid="stDataFrame"] canvas {{
         image-rendering: -webkit-optimize-contrast !important;
         image-rendering: crisp-edges !important;
-    }
+    }}
 
     /* Responsive Hero Banner */
     .hero-card {{
