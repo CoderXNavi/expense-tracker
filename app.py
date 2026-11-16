@@ -15,83 +15,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# Custom CSS: High-contrast, sharp rendering, dark sidebar button
-st.markdown("""
-<style>
-    /* Hide the form enter helper overlay to avoid text overlap */
-    [data-testid="InputInstructions"] {
-        display: none !important;
-    }
-
-    /* Dark sidebar toggle button (visible when closed) */
-    [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] {
-        background-color: #0f172a !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
-        top: 14px !important;
-        left: 14px !important;
-    }
-    [data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg {
-        fill: #ffffff !important;
-        color: #ffffff !important;
-        stroke: #ffffff !important;
-    }
-    [data-testid="stSidebarCollapseButton"] button {
-        color: #0f172a !important;
-    }
-
-    /* Sharp text rendering in table (fixes canvas blur on high-DPI screens) */
-    [data-testid="stDataFrame"] canvas {
-        image-rendering: -webkit-optimize-contrast !important;
-        image-rendering: crisp-edges !important;
-    }
-
-    /* Metric cards styling */
-    .metric-card-red {
-        padding: 14px 18px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        border-left: 5px solid #d32f2f;
-        margin-bottom: 8px;
-    }
-    .metric-card-blue {
-        padding: 14px 18px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        border-left: 5px solid #1976d2;
-        margin-bottom: 8px;
-    }
-    .metric-card-amber {
-        padding: 14px 18px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        border-left: 5px solid #f57c00;
-        margin-bottom: 8px;
-    }
-    .metric-title {
-        font-size: 11px;
-        color: #64748b;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 2px;
-        font-weight: 600;
-    }
-    .metric-value-red {
-        font-size: 20px;
-        font-weight: 700;
-        color: #c62828;
-    }
-    .metric-value {
-        font-size: 20px;
-        font-weight: 700;
-        color: #0f172a;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 DATA_FILE = "data/expenses.csv"
 
 # Function to load data from CSV
@@ -124,27 +47,162 @@ def get_base64_image(image_path):
             return base64.b64encode(f.read()).decode()
     return ""
 
-# --- HERO BANNER (Image as Background with Soft Gradient Fade) ---
 img_b64 = get_base64_image("assets/banner.jpg")
 if img_b64:
-    hero_bg = f"background: linear-gradient(to right, rgba(255, 255, 255, 0.96) 42%, rgba(255, 255, 255, 0.72) 68%, rgba(255, 255, 255, 0.25) 100%), url('data:image/jpeg;base64,{img_b64}'); background-size: cover; background-position: center right;"
+    hero_bg_desktop = f"background: linear-gradient(to right, rgba(255, 255, 255, 0.96) 42%, rgba(255, 255, 255, 0.72) 68%, rgba(255, 255, 255, 0.25) 100%), url('data:image/jpeg;base64,{img_b64}'); background-size: cover; background-position: center right;"
+    hero_bg_mobile = f"background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.93)), url('data:image/jpeg;base64,{img_b64}'); background-size: cover; background-position: center;"
 else:
-    hero_bg = "background-color: #f8fafc;"
+    hero_bg_desktop = "background-color: #f8fafc;"
+    hero_bg_mobile = "background-color: #f8fafc;"
 
+# Custom CSS: Fully responsive layout, sharp tables, clean mobile styles
 st.markdown(f"""
-<div style="
-    {hero_bg}
-    border-radius: 20px;
-    padding: 34px 30px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    border: 1px solid #e2e8f0;
-    margin-bottom: 22px;
-">
-    <div style="max-width: 62%;">
-        <span style="background-color: #fee2e2; color: #b91c1c; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">Personal Finance & Analytics</span>
-        <h1 style="margin: 12px 0 8px 0; font-size: 32px; font-weight: 800; color: #0f172a; line-height: 1.2;">Smart Expense Tracking.</h1>
-        <p style="font-size: 14px; color: #475569; margin: 0 0 12px 0; line-height: 1.5;">Record daily expenditures, monitor your budget, and explore interactive spending insights with ease.</p>
-        <span style="font-size: 12px; color: #64748b; font-weight: 500;">Data Science Industrial Training Project</span>
+<style>
+    /* Hide the form enter helper overlay to avoid text overlap */
+    [data-testid="InputInstructions"] {
+        display: none !important;
+    }
+
+    /* Dark sidebar toggle button (visible when closed) */
+    [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] {
+        background-color: #0f172a !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
+        top: 14px !important;
+        left: 14px !important;
+    }
+    [data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button {
+        color: #0f172a !important;
+    }
+
+    /* Sharp text rendering in table (fixes canvas blur on high-DPI screens) */
+    [data-testid="stDataFrame"] canvas {
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+    }
+
+    /* Responsive Hero Banner */
+    .hero-card {{
+        {hero_bg_desktop}
+        border-radius: 18px;
+        padding: 32px 28px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 20px;
+    }}
+    .hero-content {{
+        max-width: 62%;
+    }}
+    .hero-badge {{
+        background-color: #fee2e2;
+        color: #b91c1c;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
+    }}
+    .hero-title {{
+        margin: 10px 0 8px 0;
+        font-size: clamp(22px, 3.5vw, 30px);
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.25;
+    }}
+    .hero-desc {{
+        font-size: 13.5px;
+        color: #475569;
+        margin: 0 0 10px 0;
+        line-height: 1.45;
+    }}
+    .hero-sub {{
+        font-size: 11.5px;
+        color: #64748b;
+        font-weight: 500;
+    }}
+
+    /* Mobile screens (Samsung Galaxy, iPhone, etc.) */
+    @media (max-width: 640px) {{
+        .hero-card {{
+            {hero_bg_mobile}
+            padding: 18px 16px !important;
+            margin-bottom: 14px !important;
+        }}
+        .hero-content {{
+            max-width: 100% !important;
+        }}
+        .hero-title {{
+            font-size: 21px !important;
+            margin: 8px 0 6px 0 !important;
+            word-break: normal !important;
+        }}
+        .hero-desc {{
+            font-size: 12px !important;
+            margin-bottom: 8px !important;
+        }}
+    }}
+
+    /* Metric cards styling */
+    .metric-card-red {{
+        padding: 14px 18px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        border-left: 5px solid #d32f2f;
+        margin-bottom: 8px;
+    }}
+    .metric-card-blue {{
+        padding: 14px 18px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        border-left: 5px solid #1976d2;
+        margin-bottom: 8px;
+    }}
+    .metric-card-amber {{
+        padding: 14px 18px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        border-left: 5px solid #f57c00;
+        margin-bottom: 8px;
+    }}
+    .metric-title {{
+        font-size: 11px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+        font-weight: 600;
+    }}
+    .metric-value-red {{
+        font-size: 20px;
+        font-weight: 700;
+        color: #c62828;
+    }}
+    .metric-value {{
+        font-size: 20px;
+        font-weight: 700;
+        color: #0f172a;
+    }}
+</style>
+""", unsafe_allow_html=True)
+
+# --- HERO BANNER ---
+st.markdown("""
+<div class="hero-card">
+    <div class="hero-content">
+        <span class="hero-badge">Personal Finance & Analytics</span>
+        <h1 class="hero-title">Smart Expense Tracking.</h1>
+        <p class="hero-desc">Record daily expenditures, monitor your budget, and explore interactive spending insights with ease.</p>
+        <span class="hero-sub">Data Science Industrial Training Project</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
